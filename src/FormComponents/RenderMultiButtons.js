@@ -21,9 +21,9 @@ class RenderMultiButtons extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: null
+            value: []
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeButton = this.handleChangeButton.bind(this);
     }
 
     componentDidMount() {
@@ -74,32 +74,32 @@ class RenderMultiButtons extends Component {
         })
     }
 
-    handleChangeButton = value => {
-        this.setState({ value })
-        /*let { value } = this.state;
-        if (value) {
-            value = `${value};${val}`;
-        } else {
-            value = `${val}`;
-        }
-        console.log('vas', value);
-        this.setState({ value });*/
-        //this.props.dispatch(change('locality', value));
+    handleChangeButton = val => {
+        //this.setState({ value });
+        const { value } = this.state;
+
+        console.log(typeof value);
+        value.push({value: val});
+
+        this.setState({ value });
+        
     }
 
     renderButtons() {
-        const { buttons } = this.props;
+        const { buttons, classes } = this.props;
 
-        if (this.props.input.value !== this.state.value) {
+        /*if (this.props.input.value !== this.state.value) {
             this.props.input.value = this.state.value;
-        }
+        }*/
+        
         return _.map(buttons, button => {
             return (
-            <Button
-                onClick={() => this.handleChangeButton(button.value)}
-                onBlur={() => this.props.input.onBlur([...this.props.input.value])}
-                >{button.label}</Button>
+                    <Button className={classes.group}
+                        onClick={() => this.handleChangeButton(button.value)}
+                        onBlur={() => this.props.input.onBlur([...this.props.input.value])}
+                    >{button.label}</Button>
             )
+            
         })
     }
 
@@ -109,7 +109,9 @@ class RenderMultiButtons extends Component {
         const className = `form-group ${touched && error ? 'has-danger' : ''}`;
         let err = (error) ? error : '';
         console.log('-- rendermultibutton');
-        
+        if (this.props.input.value !== this.state.value) {
+            this.props.input.value = this.state.value;
+        }
         return (
             <div>
                 <div>

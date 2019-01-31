@@ -7,7 +7,7 @@ import RenderSwitchButtons from './FormComponents/RenderSwitchButtons';
 export default class Form extends Component {
 
     fixMultiChips(value) {
-        //console.log('*^*', value);
+        console.log('*^*', value);
         if (value && typeof value === 'string') {
             if (value.includes(';')) {
                 let vals = [];
